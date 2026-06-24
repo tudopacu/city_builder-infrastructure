@@ -1,5 +1,5 @@
 appName: phaser-game
-image: ghcr.io/tudopacu/city_builder-game:4ee3612e1b9633fe7c3a1e8a7a5cf7b27f298481
+image: ghcr.io/tudopacu/city_builder-game:c3c7191e81746100776429d25108521ca44e4534
 containerPort: 80
 hostPort: 8083
 replicas: 1
