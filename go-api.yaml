@@ -23,3 +23,7 @@ env:
     value: "0"
   - name: REDIS_PASSWORD
     value:
+  - name: GAME_URL
+    value: "http://citybuilder.home.ro:8083"
+  - name: SITE_URL
+    value: "http://citybuilder.home.ro:8082"
