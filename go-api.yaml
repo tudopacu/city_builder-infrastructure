@@ -4,7 +4,6 @@ containerPort: 8081
 hostPort: 8081
 replicas: 1
 
-# Inject your custom backend environment variables here:
 env:
   - name: DB_HOST
     value: "mysql-0.mysql-service"
