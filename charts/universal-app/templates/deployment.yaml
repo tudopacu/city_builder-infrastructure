@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}-deployment
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  replicas: {{ .Values.replicas | default 1 }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+    spec:
+      dnsPolicy: ClusterFirst
+      containers:
+        - name: {{ .Values.appName }}-container
+          image: {{ .Values.image }}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: {{ .Values.containerPort }}
+              hostPort: {{ .Values.hostPort }}
+          # ADD THIS BLOCK: Loops through whatever you define under "env:" in your app.yaml files
+          {{- if .Values.env }}
+          env:
+            {{- toYaml .Values.env | nindent 8 }}
+          {{- end }}

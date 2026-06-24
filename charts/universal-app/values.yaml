@@ -1,0 +1,9 @@
+# Default fallback configurations for the universal-app chart blueprint
+appName: base-app
+image: nginx:alpine
+containerPort: 80
+hostPort: 8080
+replicas: 1
+
+# Default empty environment variables block
+env: []

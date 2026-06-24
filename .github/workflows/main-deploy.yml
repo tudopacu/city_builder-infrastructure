@@ -1,0 +1,46 @@
+name: Deploy Infrastructure Stack
+
+on:
+  push:
+    branches: [ master ]
+  repository_dispatch:
+    types: [ update-image ]
+
+jobs:
+  helm-deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Infrastructure Code
+        uses: actions/checkout@v4
+        with:
+          # Use the PAT token to clone so the automation runner can push changes back
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Step that automatically updates app files when a code repo triggers it
+      - name: Update target app variable file
+        if: github.event_name == 'repository_dispatch'
+        run: |
+          APP_NAME="${{ github.event.client_payload.app }}"
+          NEW_IMAGE="${{ github.event.client_payload.image }}"
+          
+          echo "Automating update for ${APP_NAME} to use image: ${NEW_IMAGE}"
+          
+          # Use sed to swap out the image configuration line in the targeted environment file
+          sed -i "s|image:.*|image: ${NEW_IMAGE}|" ${APP_NAME}.yaml
+          
+          # Commit the modified configuration directly into the Git tracking log
+          git config --global user.name "Infra Bot"
+          git config --global user.email "infra-bot@home.ro"
+          git add ${APP_NAME}.yaml
+          git commit -m "automation: upgrade ${APP_NAME} image to ${NEW_IMAGE}"
+          git push origin master
+
+      # Run the core Helm upgrades directly against your local bare-metal cluster
+      - name: Apply Helm Charts to Cluster
+        run: |
+          echo "Syncing entire cluster configuration layer..."
+          
+          helm upgrade --install golang-api ./charts/universal-app -f go-api.yaml
+          helm upgrade --install react-frontend ./charts/universal-app -f react-frontend.yaml
+          helm upgrade --install phaser-game ./charts/universal-app -f phaser-game.yaml
+          helm upgrade --install yii2-cms ./charts/universal-app -f yii2-cms.yaml

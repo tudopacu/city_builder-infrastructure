@@ -1,0 +1,18 @@
+appName: golang-api
+image: ghcr.io/tudopacu/city_builder-api:latest
+containerPort: 8081
+hostPort: 8081
+replicas: 1
+
+# Inject your custom backend environment variables here:
+env:
+  - name: DB_HOST
+    value: "mysql-0.mysql-service"
+  - name: DB_PORT
+    value: "3306"
+  - name: DB_NAME
+    value: "game"
+  - name: GIN_MODE
+    value: "release"
+  - name: DB_PASSWORD
+    value: "Hamham1miau!"
