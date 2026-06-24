@@ -2,6 +2,7 @@ name: Deploy Infrastructure Stack
 
 on:
   push:
+    # 1. FIX: Tell GitHub to trigger the runner when commits land on master
     branches: [ master ]
   repository_dispatch:
     types: [ update-image ]
@@ -13,12 +14,9 @@ jobs:
       - name: Checkout Infrastructure Code
         uses: actions/checkout@v4
         with:
-          # FIX: Must use your custom PAT instead of GITHUB_TOKEN so the runner can push changes back
           token: ${{ secrets.INFRA_PAT }}
-          # Ensures git history persists cleanly during the rewrite step
           persist-credentials: true
 
-      # Step that automatically updates app files when a code repo triggers it
       - name: Update target app variable file
         if: github.event_name == 'repository_dispatch'
         run: |
@@ -27,17 +25,15 @@ jobs:
           
           echo "Automating update for ${APP_NAME} to use image: ${NEW_IMAGE}"
           
-          # Use sed to swap out the image configuration line in the targeted environment file
           sed -i "s|image:.*|image: ${NEW_IMAGE}|" ${APP_NAME}.yaml
           
-          # Commit the modified configuration directly into the Git tracking log
           git config --global user.name "Infra Bot"
           git config --global user.email "infra-bot@home.ro"
           git add ${APP_NAME}.yaml
           git commit -m "automation: upgrade ${APP_NAME} image to ${NEW_IMAGE}"
+          # 2. FIX: Tell git to push the automated commit to master instead of main
           git push origin master
 
-      # Run the core Helm upgrades directly against your local bare-metal cluster
       - name: Apply Helm Charts to Cluster
         run: |
           echo "Syncing entire cluster configuration layer..."

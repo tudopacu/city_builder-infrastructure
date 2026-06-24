@@ -37,7 +37,8 @@ spec:
           ports:
             - containerPort: {{ .Values.containerPort }}
               hostPort: {{ .Values.hostPort }}
+          # FIX: Pulled inside the container block, nested under ports
           {{- if .Values.env }}
           env:
-            {{- toYaml .Values.env | nindent 8 }}
+            {{- toYaml .Values.env | nindent 10 }}
           {{- end }}
