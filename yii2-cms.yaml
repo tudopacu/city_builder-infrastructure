@@ -9,8 +9,8 @@ migrationCommand: "php yii migrate --interactive=0"
 
 env:
   - name: YII_ENV
-    value: "prod"
+    value: "dev"
   - name: YII_DEBUG
-    value: "0"
+    value: "1"
   - name: COOKIE_VALIDATION_KEY
     value: "generate-a-random-long-secret-string-here"
