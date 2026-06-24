@@ -15,29 +15,29 @@ spec:
         app: {{ .Values.appName }}
     spec:
       dnsPolicy: ClusterFirst
-      # ADD THIS BLOCK: Runs migrations before spinning up the main container
-      { { - if .Values.migrationCommand } }
+
+      {{- if .Values.migrationCommand }}
       initContainers:
-        - name: { { .Values.appName } }-migration
-          image: { { .Values.image } }
+        - name: {{ .Values.appName }}-migration
+          image: {{ .Values.image }}
           imagePullPolicy: Always
-          command: [ "/bin/sh", "-c" ]
+          command: ["/bin/sh", "-c"]
           args:
-            - { { .Values.migrationCommand } }
-          { { - if .Values.env } }
+            - {{ .Values.migrationCommand }}
+          {{- if .Values.env }}
           env:
-            { { - toYaml .Values.env | nindent 10 } }
-          { { - end } }
-      { { - end } }
+            {{- toYaml .Values.env | nindent 10 }}
+          {{- end }}
+      {{- end }}
 
       containers:
-        - name: { { .Values.appName } }-container
-          image: { { .Values.image } }
+        - name: {{ .Values.appName }}-container
+          image: {{ .Values.image }}
           imagePullPolicy: Always
           ports:
-            - containerPort: { { .Values.containerPort } }
-              hostPort: { { .Values.hostPort } }
-          { { - if .Values.env } }
+            - containerPort: {{ .Values.containerPort }}
+              hostPort: {{ .Values.hostPort }}
+          {{- if .Values.env }}
           env:
-            { { - toYaml .Values.env | nindent 8 } }
-          { { - end } }
+            {{- toYaml .Values.env | nindent 8 }}
+          {{- end }}
