@@ -1,5 +1,5 @@
 appName: yii2-cms
-image: ghcr.io/tudopacu/city_builder-cms:f173dc43e61f996b0a6728226742ab2e4343fb0b
+image: ghcr.io/tudopacu/city_builder-cms:c560eb05f5e3ad0a5a78cb11d8a7e415dfe3ae55
 containerPort: 80         # Port NGINX/Apache listens to inside your PHP container
 hostPort: 8084         # The physical host port you want to route to the CMS
 replicas: 1
