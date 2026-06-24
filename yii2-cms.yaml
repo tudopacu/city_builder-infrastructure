@@ -4,6 +4,8 @@ containerPort: 80         # Port NGINX/Apache listens to inside your PHP contain
 hostPort: 8084         # The physical host port you want to route to the CMS
 replicas: 1
 
+migrationCommand: "php yii migrate --interactive=0"
+
 env:
   - name: DB_HOST
     value: "mysql-0.mysql-service"
