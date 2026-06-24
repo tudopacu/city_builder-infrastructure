@@ -3,29 +3,14 @@ image: ghcr.io/tudopacu/city_builder-cms:b4efc1ecb3971dd1a4e63e0893ad58152dde74f
 containerPort: 80
 hostPort: 8084
 replicas: 1
+useSecrets: app-credentials
 
 migrationCommand: "php yii migrate --interactive=0"
 
 env:
-  - name: DB_HOST
-    value: "mysql-service"
-  - name: DB_NAME
-    value: "game"
-  - name: DB_USER
-    value: "root"
-  - name: DB_PASSWORD
-    value: "Hamham1miau!"
   - name: YII_ENV
     value: "prod"
   - name: YII_DEBUG
     value: "0"
   - name: COOKIE_VALIDATION_KEY
     value: "generate-a-random-long-secret-string-here"
-  - name: REDIS_HOST
-    value: "redis-service"
-  - name: REDIS_PORT
-    value: "6379"
-  - name: REDIS_DATABASE
-    value: "0"
-  - name: REDIS_PASSWORD
-    value:

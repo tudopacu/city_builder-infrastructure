@@ -7,7 +7,6 @@ metadata:
 spec:
   strategy:
     type: Recreate
-
   replicas: {{ .Values.replicas | default 1 }}
   selector:
     matchLabels:
@@ -27,6 +26,11 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - {{ .Values.migrationCommand }}
+          {{- if .Values.useSecrets }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.useSecrets }}
+          {{- end }}
           {{- if .Values.env }}
           env:
             {{- toYaml .Values.env | nindent 10 }}
@@ -40,6 +44,11 @@ spec:
           ports:
             - containerPort: {{ .Values.containerPort }}
               hostPort: {{ .Values.hostPort }}
+          {{- if .Values.useSecrets }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.useSecrets }}
+          {{- end }}
           {{- if .Values.env }}
           env:
             {{- toYaml .Values.env | nindent 10 }}

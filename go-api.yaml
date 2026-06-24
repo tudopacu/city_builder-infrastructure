@@ -3,26 +3,11 @@ image: ghcr.io/tudopacu/city_builder-api:5222a7066af986ade559462c05e3ecf5b94091d
 containerPort: 8081
 hostPort: 8081
 replicas: 1
+useSecrets: app-credentials
 
 env:
-  - name: DB_HOST
-    value: "mysql-service"
-  - name: DB_NAME
-    value: "game"
-  - name: DB_USER
-    value: "root"
-  - name: DB_PASSWORD
-    value: "Hamham1miau!"
   - name: GIN_MODE
     value: "release"
-  - name: REDIS_HOST
-    value: "redis-service"
-  - name: REDIS_PORT
-    value: "6379"
-  - name: REDIS_DATABASE
-    value: "0"
-  - name: REDIS_PASSWORD
-    value:
   - name: GAME_URL
     value: "http://citybuilder.home.ro:8083"
   - name: SITE_URL
