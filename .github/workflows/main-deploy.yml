@@ -13,8 +13,10 @@ jobs:
       - name: Checkout Infrastructure Code
         uses: actions/checkout@v4
         with:
-          # Use the PAT token to clone so the automation runner can push changes back
-          token: ${{ secrets.GITHUB_TOKEN }}
+          # FIX: Must use your custom PAT instead of GITHUB_TOKEN so the runner can push changes back
+          token: ${{ secrets.INFRA_PAT }}
+          # Ensures git history persists cleanly during the rewrite step
+          persist-credentials: true
 
       # Step that automatically updates app files when a code repo triggers it
       - name: Update target app variable file
