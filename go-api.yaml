@@ -6,12 +6,20 @@ replicas: 1
 
 env:
   - name: DB_HOST
-    value: "mysql-0.mysql-service"
-  - name: DB_PORT
-    value: "3306"
+    value: "mysql-service"
   - name: DB_NAME
     value: "game"
-  - name: GIN_MODE
-    value: "release"
+  - name: DB_USER
+    value: "root"
   - name: DB_PASSWORD
     value: "Hamham1miau!"
+  - name: GIN_MODE
+    value: "release"
+  - name: REDIS_HOST
+    value: "redis-service"
+  - name: REDIS_PORT
+    value: "6379"
+  - name: REDIS_DATABASE
+    value: "0"
+  - name: REDIS_PASSWORD
+    value:
