@@ -2,7 +2,6 @@ name: Deploy Infrastructure Stack
 
 on:
   push:
-    # 1. FIX: Tell GitHub to trigger the runner when commits land on master
     branches: [ master ]
   repository_dispatch:
     types: [ update-image ]
@@ -18,30 +17,30 @@ jobs:
           persist-credentials: true
 
       - name: Update target app variable file
-          if: github.event_name == 'repository_dispatch'
-          run: |
-            APP_NAME="${{ github.event.client_payload.app }}"
-            NEW_IMAGE="${{ github.event.client_payload.image }}"
-            
-            echo "Automating update for ${APP_NAME} to use image: ${NEW_IMAGE}"
-            
-            # 1. Cleanly check out a fresh copy of just that app's file to discard any rogue local disk edits
-            git checkout master -- ${APP_NAME}.yaml || true
-            
-            # 2. Swap out the image configuration line explicitly
-            sed -i "s|image:.*|image: ${NEW_IMAGE}|" ${APP_NAME}.yaml
-            
-            # 3. Configure Git local identities
-            git config --global user.name "Infra Bot"
-            git config --global user.email "infra-bot@home.ro"
-            
-            # 4. CRITICAL FIX: Only stage and commit the exact file that was modified by this specific event
-            git add ${APP_NAME}.yaml
-            git commit -m "automation: upgrade ${APP_NAME} image to ${NEW_IMAGE}"
-            
-            # 5. Pull any changes that happened while this job was running to avoid conflicts, then push
-            git pull origin master --rebase
-            git push origin master
+        if: github.event_name == 'repository_dispatch'
+        run: |
+          APP_NAME="${{ github.event.client_payload.app }}"
+          NEW_IMAGE="${{ github.event.client_payload.image }}"
+          
+          echo "Automating update for ${APP_NAME} to use image: ${NEW_IMAGE}"
+          
+          # 1. Cleanly check out a fresh copy of just that app's file to discard any rogue local disk edits
+          git checkout master -- ${APP_NAME}.yaml || true
+          
+          # 2. Swap out the image configuration line explicitly
+          sed -i "s|image:.*|image: ${NEW_IMAGE}|" ${APP_NAME}.yaml
+          
+          # 3. Configure Git local identities
+          git config --global user.name "Infra Bot"
+          git config --global user.email "infra-bot@home.ro"
+          
+          # 4. Only stage and commit the exact file that was modified by this specific event
+          git add ${APP_NAME}.yaml
+          git commit -m "automation: upgrade ${APP_NAME} image to ${NEW_IMAGE}"
+          
+          # 5. Pull any changes that happened while this job was running to avoid conflicts, then push
+          git pull origin master --rebase
+          git push origin master
 
       - name: Apply Helm Charts to Cluster
         run: |
