@@ -5,6 +5,9 @@ metadata:
   labels:
     app: {{ .Values.appName }}
 spec:
+  strategy:
+    type: Recreate
+
   replicas: {{ .Values.replicas | default 1 }}
   selector:
     matchLabels:
@@ -37,7 +40,6 @@ spec:
           ports:
             - containerPort: {{ .Values.containerPort }}
               hostPort: {{ .Values.hostPort }}
-          # FIX: Pulled inside the container block, nested under ports
           {{- if .Values.env }}
           env:
             {{- toYaml .Values.env | nindent 10 }}
