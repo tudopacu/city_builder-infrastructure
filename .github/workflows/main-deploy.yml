@@ -50,3 +50,4 @@ jobs:
           helm upgrade --install react-frontend ./charts/universal-app -f react-frontend.yaml
           helm upgrade --install phaser-game ./charts/universal-app -f phaser-game.yaml
           helm upgrade --install yii2-cms ./charts/universal-app -f yii2-cms.yaml
+          helm upgrade --install static-assets ./charts/universal-app -f static-assets.yaml
