@@ -1,5 +1,5 @@
 appName: yii2-cms
-image: ghcr.io/tudopacu/city_builder-cms:bc165f99355f9f23bbb5a6bd52fc887ff16adeca
+image: ghcr.io/tudopacu/city_builder-cms:cd75b4f75a9017c3fbadad60b74b598d691a0bc9
 containerPort: 80
 hostPort: 8080
 replicas: 1
