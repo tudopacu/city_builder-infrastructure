@@ -16,7 +16,14 @@ spec:
       labels:
         app: {{ .Values.appName }}
     spec:
-      dnsPolicy: ClusterFirst
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+          - 192.168.1.151
+        searches:
+          - default.svc.cluster.local
+          - svc.cluster.local
+          - cluster.local
 
       {{- if .Values.migrationCommand }}
       initContainers:
