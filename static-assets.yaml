@@ -1,5 +1,5 @@
 appName: static-assets
-image: ghcr.io/tudopacu/city_builder-static:60a46d298482b8b829bd1cc2c696f3fcf62293a3
+image: ghcr.io/tudopacu/city_builder-static:f205c9e5bae48aab8ca1269f55c80e136ebf2095
 containerPort: 80
 hostPort: 8084
 replicas: 1
