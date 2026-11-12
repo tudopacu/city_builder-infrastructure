@@ -12,3 +12,5 @@ env:
     value: "http://citybuilder.home.ro:8083"
   - name: SITE_URL
     value: "http://citybuilder.home.ro:8082"
+  - name: JWT_SECRET
+    value: "7k9P2mX8vQ4zL1nR6wT3yB5jH0cF9dG2sA8eK4uM7pY="
