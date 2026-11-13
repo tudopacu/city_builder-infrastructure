@@ -1,5 +1,5 @@
 appName: golang-api
-image: ghcr.io/tudopacu/city_builder-api:5c942ba21da67bf1e1bdf526f029ca943b971d95
+image: ghcr.io/tudopacu/city_builder-api:b9badf29508eaff3f1dbe83cd4ef47806b1b815b
 containerPort: 8081
 hostPort: 8081
 replicas: 1
