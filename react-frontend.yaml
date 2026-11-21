@@ -1,5 +1,5 @@
 appName: react-frontend
-image: ghcr.io/tudopacu/city_builder-site:442838e2621ec15ca0d727478d9f1b23c3f16c57
+image: ghcr.io/tudopacu/city_builder-site:7cf4061fdb63bddee1115b7a819cedaebab10291
 containerPort: 80
 hostPort: 8082
 replicas: 1
